@@ -12,7 +12,7 @@ contract EthereumLogin {
         registered[msg.sender] = false;
     }
 
-    function varify(address _address) public view returns (bool) {
+    function verify(address _address) public view returns (bool) {
         return registered[_address];
     }    
 

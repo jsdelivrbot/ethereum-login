@@ -60,12 +60,12 @@ function unregister(){
         }); 
 }
 
-function varify(){   
+function verify(){   
     var data = web3js.utils.utf8ToHex("login");
     console.log(data);
     web3js.eth.personal.sign(data, userAccount).then(function (sig){
        web3js.eth.personal.ecRecover(data, sig).then(function (address){
-           contract.methods.varify(address).call().then(function (result){
+           contract.methods.verify(address).call().then(function (result){
              if(result){
                alert("Login success!");
              } else {

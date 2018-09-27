@@ -60,12 +60,12 @@ function unregister(){
         }); 
 }
 
-function varify(){   
+function verify(){   
     var data = web3js.utils.utf8ToHex("login");
     console.log(data);
     web3js.eth.personal.sign(data, userAccount).then(function (sig){
        web3js.eth.personal.ecRecover(data, sig).then(function (address){
-           contract.methods.varify(address).call().then(function (result){
+           contract.methods.verify(address).call().then(function (result){
              if(result){
                alert("Login success!");
              } else {
@@ -76,7 +76,7 @@ function varify(){
     });
 }
 
-var contractAddress = "0x42861ed92353854e88862c9ab8df8bd9819171b0";
+var contractAddress = "0x1c8163915cd98320d1a4d446791bedba702b68ae";
 
 var contractABI = [
 	{
@@ -105,7 +105,7 @@ var contractABI = [
 				"type": "address"
 			}
 		],
-		"name": "varify",
+		"name": "verify",
 		"outputs": [
 			{
 				"name": "",

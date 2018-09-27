@@ -1,5 +1,5 @@
 //Rinkeby address
-var contractAddress = "0x42861ed92353854e88862c9ab8df8bd9819171b0";
+var contractAddress = "0x1c8163915cd98320d1a4d446791bedba702b68ae";
 
 var contractABI = [
 	{
@@ -28,7 +28,7 @@ var contractABI = [
 				"type": "address"
 			}
 		],
-		"name": "varify",
+		"name": "verify",
 		"outputs": [
 			{
 				"name": "",
