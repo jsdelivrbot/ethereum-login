@@ -1,96 +1,42 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+  <head>
+    <title>Ethereum Login</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    
+  </head>  
+  <body>
+    <div class="panel panel-default">
+      <div class="jumbotron">
+      <h1>Ethereum Login</h1>
+        <p>This is opensource ethereum login system. Source code is available in <a href="https://github.com/block-base/ethereum-login">Github</a>.</p>
+        <p>Please connect Rinkyby network via Metamask.</p>
+      <hr class="my-4">
+      <p>
+        <button class="btn btn-primary" onclick="register();">
+          Register
+        </button>
 
-<head>
-    <title>Ethereum dApps QuickStart</title>
-    <script language="javascript" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script language="javascript" type="text/javascript" src="./js/web3.min.js"></script>
-    <script language="javascript" type="text/javascript" src="./js/contract_abi.js"></script>
-</head>
-
-<body>
-
-    <h1>Ethereum dApps QuickStart</h1>
-    This is simple dApps template
-
-    <h2>Preparation</h2>
-    1. Replace contractAddress to your contract address.</br>
-    => "index.html" var contractAddress = "YOUR_CONTRACT_ADDRESS"</br>
-
-    2. Replace contract_abi to your contract ABI.</br>
-    => "js/contract_abi.js" var contractABI = []</br>
-
-    <h2>How to use</h2>
-    1. Connect Metamask. <br>
-    2. Input text in textbox. <br>
-    3. Click Set to set text in contract. <br>
-    4. Wait transaction is confirmed. <br>
-    5. Click Get to get text from contract.<br>
-
-    <h2></h2>
-    <input type="text" id="num">
-    <input type="button" value="Set" onClick="set()">
-    <input type="button" value="Get" onClick="get()">
-
-    <script>
-        var contract;
-        var userAccount;
-
-        function startApp() {
-            //Replace "YOUR_CONTRACT_ADDRESS" with your contract address  
-            var contractAddress = "YOUR_CONTRACT_ADDRESS";
-            contract = new web3js.eth.Contract(contractABI, contractAddress);
-
-            var accountInterval = setInterval(function () {
-                web3.eth.getAccounts((error, accounts) => {
-                    if (accounts[0] !== userAccount) {
-                        userAccount = accounts[0];
-
-                    }
-                });
-            }, 100);
-
-        }
-
-        window.addEventListener('load', function () {
-            // Checking if Web3 has been injected by the browser (Mist/MetaMask)
-            if (typeof web3 !== 'undefined') {
-                // Use Mist/MetaMask's provider
-                web3js = new Web3(web3.currentProvider);
-            } else {
-                // Handle the case where the user doesn't have Metamask installed
-                // Probably show them a message prompting them to install Metamask
-            }
-            // Now you can start your app & access web3 freely:
-            startApp()
-        })
-
-
-        function set() {
-            var _num = document.getElementById("num").value;
-            contract.methods.set(_num)
-                .send({ from: userAccount })
-                .on("transactionHash", function (txhash) {
-                    alert("Txhash: " +  txhash);
-                })
-                .on("receipt", function (receipt) {
-                    //Process when transaction is confirmed
-                    console.log(receipt)
-                })
-                .on("error", function (error) {
-                    //Process when transaction is failed
-                    console.log(error)
-                });
-        }
-
-        function get() {
-            contract.methods.get().call().then(function(_val){
-                alert(_val);      
-            });
-        }
-
-    </script>
-
-</body>
-
+        <button class="btn btn-secondary" onclick="register();">
+          Unregister
+        </button>
+      </p>      
+      <hr class="my-4">
+      <p>
+        <button class="btn btn-success" onclick="varify();">
+          Login
+        </button>
+      </p>      
+    </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <script src="js/web3.min.js"></script>
+    <script src="js/contract.js"></script>
+    <script src="js/app.js"></script>
+  </body>
 </html>
