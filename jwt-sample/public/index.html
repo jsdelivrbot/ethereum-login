@@ -1,0 +1,95 @@
+<!DOCTYPE html> 
+<html>
+<head>
+<meta charset="utf-8" /> 
+<title>Ethereum Login</title>  
+
+</head>
+
+<body>
+
+<h1>Ethereum login</h1>
+
+<button type="button" id="login">Login</button>
+<button type="button" id="verify">Verify</button>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>  
+<script src="web3.min.js"></script>   
+  
+<script>  
+var userAccount;
+
+window.addEventListener('load', function () {
+    // Checking if Web3 has been injected by the browser (Mist/MetaMask)
+    if (typeof web3 !== 'undefined') {
+        // Use Mist/MetaMask's provider
+        web3js = new Web3(web3.currentProvider);
+    } else {
+        // Handle the case where the user doesn't have Metamask installed
+        // Probably show them a message prompting them to install Metamask
+    }
+    // Now you can start your app & access web3 freely:
+    startApp()
+})
+
+function startApp() {
+    //Replace "YOUR_CONTRACT_ADDRESS" with your contract address  
+    //contract = new web3js.eth.Contract(contractABI, contractAddress);
+
+    var accountInterval = setInterval(function () {
+        web3.eth.getAccounts((error, accounts) => {
+            if (accounts[0] !== userAccount) {
+                userAccount = accounts[0];
+            }
+        });
+    }, 100);
+}  
+  
+$(function() {
+    $("#login").on("click", function() {
+       web3js.eth.personal.sign("etherlogin", userAccount).then(function (sig){
+console.log('user:', userAccount);
+console.log('sig:', sig);
+          $.ajax({
+            method: 'POST',
+            contentType: 'application/json',
+            url: location.href + '/sign-in',
+            data: JSON.stringify({
+              account: userAccount,
+              signed: sig,
+            }),
+            success: function (data, textStatus, jqXHR) {
+console.log('data:', data);
+
+              console.log('Signed in.');
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+              console.log('Failed to sign in.');
+            }
+          });         
+       });         
+    });
+
+
+    $("#verify").on("click", function() {
+        $.ajax({
+          method: 'GET',
+            url: location.href + 'who',
+          dataType: 'json',
+          success: function (data, textStatus, jqXHR) {
+console.log('data:', data);
+            alert("Your address from jwt:" + data.account);
+          },
+          error: function (jqXHR, textStatus, errorThrown) {
+            console.log('error');
+          }
+        });   
+    });  
+});  
+</script>
+</body>
+
+  
+  
+  
+</html>
